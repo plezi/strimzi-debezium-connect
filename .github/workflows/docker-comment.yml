@@ -1,0 +1,59 @@
+name: Docker Comment CI
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  ci:
+    if: contains(github.event.comment.html_url, '/pull/') && startsWith(github.event.comment.body, '/docker-build-image')
+    name: Docker Comment Action
+    runs-on: ubuntu-latest
+    env:
+      GHCR_PAT: ${{secrets.GHCR_PAT}}
+      REPO_PAT: ${{secrets.REPO_PAT}}
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Add reaction and output
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          reactions: eyes
+          body: |
+            **Edit:** Docker build has been scheduled -> [LINK](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})
+      - name: Get upstream branch
+        id: upstreambranch
+        run: |
+          echo "::set-output name=branchname::$(curl -v -H "Accept: application/vnd.github.sailor-v-preview+json" -u ${REPO_PAT} ${{ github.event.issue.pull_request.url }} | jq '.head.ref' | sed 's/\"//g')"
+          echo "::set-output name=short_sha::$(curl -v -H "Accept: application/vnd.github.sailor-v-preview+json" -u ${REPO_PAT} ${{ github.event.issue.pull_request.url }} | jq '.head.sha' | sed 's/\"//g' | cut -c1-8)"
+      - name: Echo upstream branch
+        run: |
+          echo ${{ steps.upstreambranch.outputs.branchname }}
+      - name: Echo upstream short commit
+        run: |
+          echo ${{ steps.upstreambranch.outputs.short_sha }}
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.upstreambranch.outputs.branchname }}
+      - name: Login into ghcr.io
+        run: |
+          echo "$GHCR_PAT" | docker login ghcr.io -u nicovak --password-stdin
+      - name: Build and tag image
+        run: |
+          docker build --cache-from ghcr.io/plezi/strimzi-debezium-connect:latest --build-arg BUILDKIT_INLINE_CACHE=1 -t ghcr.io/plezi/strimzi-debezium-connect:${{ steps.upstreambranch.outputs.short_sha }} .
+      - name: Push image
+        run: |
+          docker push ghcr.io/plezi/strimzi-debezium-connect:${{ steps.upstreambranch.outputs.short_sha }}
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Docker image has been pushed to ghcr.io
+            - Image tag : `strimzi-debezium-connect:${{ steps.upstreambranch.outputs.short_sha }}`
+            - Commit : ${{ steps.upstreambranch.outputs.short_sha }}
+          reaction-type: "rocket"

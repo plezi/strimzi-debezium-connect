@@ -21,4 +21,5 @@ bin
 # vendor/
 
 *.crt
-plugins
+plugins/*
+!plugins/.keep

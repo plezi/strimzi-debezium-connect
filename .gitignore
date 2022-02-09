@@ -22,3 +22,4 @@ bin
 
 *.crt
 plugins/*
+!plugins/.keep

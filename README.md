@@ -19,7 +19,7 @@ The version specified in the one of Debezium.
 ## Build image
 
 ```bash
-docker build -t ghcr.io/plezi/strimzi-debezium-connect --build-arg STRIMZI-VERSION="0.27.1" --build-arg KAFKA-VERSION="2.8.0" .
+docker build -t ghcr.io/plezi/strimzi-debezium-connect --build-arg STRIMZI_VERSION="0.27.1" --build-arg KAFKA_VERSION="2.8.0" .
 ```
 
 ### Resources

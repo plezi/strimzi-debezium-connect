@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/plezi/strimzi-debezium-connect/compare/v1.0.0...v1.1.0) (2022-02-17)
+
+
+### 🚀 Features
+
+* add postgres connector ([8bfa7a5](https://github.com/plezi/strimzi-debezium-connect/commit/8bfa7a5cbaf16b3dd60477dca61da588451cb9fd))
+
 ## 1.0.0 (2022-02-09)
 
 

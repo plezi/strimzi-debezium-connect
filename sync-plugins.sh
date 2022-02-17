@@ -2,7 +2,7 @@
 set +eou pipefail
 
 version="1.8.0.Final"
-plugins=("debezium-connector-mongodb")
+plugins=("debezium-connector-mongodb" "debezium-connector-postgres")
 
 if [[ "$#" -gt 0 ]]; then
   version="$1"

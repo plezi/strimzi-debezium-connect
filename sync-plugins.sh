@@ -1,7 +1,9 @@
 #!/bin/bash
-set +eou pipefail
+set -o errexit
+set -o pipefail
+set -o nounset
 
-version="1.8.0.Final"
+version="1.9.5.Final"
 plugins=("debezium-connector-mongodb" "debezium-connector-postgres")
 
 if [[ "$#" -gt 0 ]]; then

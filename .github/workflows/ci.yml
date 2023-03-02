@@ -50,7 +50,7 @@ jobs:
           git checkout -b ci_processing
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: Develop release
         run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p semantic-release semantic-release
 
@@ -78,9 +78,9 @@ jobs:
           git config --global user.name $CI_USER_NAME
           git config --global pull.ff only
           git checkout -b ci_processing
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: Release
         run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p semantic-release semantic-release
       - name: Update back develop

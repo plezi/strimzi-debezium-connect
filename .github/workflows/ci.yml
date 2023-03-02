@@ -19,10 +19,10 @@ jobs:
     name: Check, test & lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: wagoid/commitlint-github-action@v2
+      - uses: wagoid/commitlint-github-action@v5
 
   prerelease:
     needs: [check_test]
@@ -36,7 +36,7 @@ jobs:
           echo "GITHUB_REF: ${GITHUB_REF}"
           echo "GITHUB_SHA: ${GITHUB_SHA}"
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Fetch tags
@@ -48,12 +48,9 @@ jobs:
           git config --global user.name $CI_USER_NAME
           git config --global pull.ff only
           git checkout -b ci_processing
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "3.9.1"
+          node-version: 18
       - name: Develop release
         run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p semantic-release semantic-release
 
@@ -81,12 +78,9 @@ jobs:
           git config --global user.name $CI_USER_NAME
           git config --global pull.ff only
           git checkout -b ci_processing
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "3.9.1"
+          node-version: 18
       - name: Release
         run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p semantic-release semantic-release
       - name: Update back develop

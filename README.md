@@ -13,7 +13,7 @@ The version specified in the one of Debezium.
 ./sync-plugins.sh
 
 # with version override
-./sync-plugins.sh 2.1.2.Final
+./sync-plugins.sh 2.3.1.Final
 ```
 
 ## Build image

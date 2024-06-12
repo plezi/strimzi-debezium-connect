@@ -50,7 +50,7 @@ jobs:
           git checkout -b ci_processing
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: "${{ vars.CI_NODE_VERSION }}"
       - name: Develop release
         run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p semantic-release semantic-release
 
@@ -80,7 +80,7 @@ jobs:
           git checkout -b ci_processing
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: "${{ vars.CI_NODE_VERSION }}"
       - name: Release
         run: npx -p conventional-changelog-conventionalcommits -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p semantic-release semantic-release
       - name: Update back develop

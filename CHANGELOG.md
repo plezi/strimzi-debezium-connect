@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/plezi/strimzi-debezium-connect/compare/v1.4.0...v1.5.0) (2023-08-01)
+
+
+### 🚀 Features
+
+* upgrade debezium ([1363ac7](https://github.com/plezi/strimzi-debezium-connect/commit/1363ac7c50f864568b74858f6f35b52f593857ac))
+
 ## [1.4.0](https://github.com/plezi/strimzi-debezium-connect/compare/v1.3.0...v1.4.0) (2023-03-02)
 
 

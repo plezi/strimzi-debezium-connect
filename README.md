@@ -13,10 +13,10 @@ The version specified in the one of Debezium.
 ./sync-plugins.sh
 
 # with version override
-./sync-plugins.sh 2.6.2.Final
+./sync-plugins.sh 3.0.2.Final
 ```
 
-## Build image
+## Build image with specific Strimzi and Kafka version
 
 ```bash
 docker build -t ghcr.io/plezi/strimzi-debezium-connect --build-arg STRIMZI_VERSION="0.31.0" --build-arg KAFKA_VERSION="3.2.1" .

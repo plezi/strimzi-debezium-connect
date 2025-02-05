@@ -3,7 +3,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-version="3.0.2.Final"
+version="3.0.7.Final"
 plugins=("debezium-connector-mongodb" "debezium-connector-postgres")
 
 if [[ "$#" -gt 0 ]]; then
